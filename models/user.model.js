@@ -1,13 +1,13 @@
 import { db } from "../database/connection.database.js";
 
-const create = async ({ email, password, username, role_id }) => {
+const create = async ({ email, password, username, role_id, created_by }) => {
   const query = {
     text: `
-        INSERT INTO users (email, password, username, role_id, created_date, modified_date)
-        VALUES ($1, $2, $3, $4, NOW(), NOW())
+        INSERT INTO users (email, password, username, role_id, created_date, modified_date, created_by)
+        VALUES ($1, $2, $3, $4, NOW(), NOW(), $5)
         RETURNING email, username, uid, role_id
         `,
-    values: [email, password, username, role_id],
+    values: [email, password, username, role_id, created_by],
   };
 
   const { rows } = await db.query(query);

@@ -5,9 +5,9 @@ import { UserModel } from "../models/user.model.js";
 // /api/v1/users/register
 const register = async (req, res) => {
   try {
-    const { username, email, password, role_id } = req.body;
+    const { username, email, password, role_id, created_by } = req.body;
 
-    if (!username || !email || !password || !!role_id) {
+    if (!username || !email || !password) {
       return res.status(400).json({
         ok: false,
         msg: "Missing required fields: email, password, username, role_id",
@@ -26,7 +26,8 @@ const register = async (req, res) => {
       email,
       password: hashedPassword,
       username,
-      role_id,
+      role_id: role_id ? role_id : 4,
+      created_by: created_by ? created_by : null,
     });
 
     const token = jwt.sign(

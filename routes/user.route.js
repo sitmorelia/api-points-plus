@@ -10,13 +10,7 @@ router.post("/register", UserController.register);
 router.post("/login", UserController.login);
 router.get("/profile", verifyToken, UserController.profile);
 
-// Admin
-router.get("/users", verifyToken, verifyAdmin, UserController.findAll);
-router.put(
-  "/update-role/:uid",
-  verifyToken,
-  verifyAdmin,
-  UserController.updateRoleVet
-);
+// // Admin
+router.get("/", verifyToken, verifyAdmin, UserController.findAll);
 
 export default router;
